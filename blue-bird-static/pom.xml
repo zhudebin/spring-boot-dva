@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>blue-bird-static</artifactId>
+
+  <parent>
+    <groupId>com.blue.bird</groupId>
+    <artifactId>blue-bird</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>dist</directory>
+        <targetPath>static</targetPath>
+        <excludes>
+          <exclude>**/maps/**</exclude>
+        </excludes>
+      </resource>
+
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <!-- Use the latest released version:
+        https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+        <version>1.3</version>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <nodeVersion>v7.9.0</nodeVersion>
+              <npmVersion>provided</npmVersion>
+              <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm build</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
