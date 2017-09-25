@@ -76,6 +76,17 @@
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>
+        <!--验证码-->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>org.springframework.security</groupId>-->
         <!--<artifactId>spring-security-test</artifactId>-->
@@ -83,11 +94,11 @@
         <!--</dependency>-->
 
 
-        <!--<dependency>-->
-            <!--<groupId>com.google.guava</groupId>-->
-            <!--<artifactId>guava</artifactId>-->
-            <!--<version>23.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>io.javaslang</groupId>-->
             <!--<artifactId>javaslang</artifactId>-->
