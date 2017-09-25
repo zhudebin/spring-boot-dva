@@ -17,11 +17,16 @@ target/
 
 ### NetBeans ###
 nbproject/private/
+node_modules/
+dist/
+
+
 node/
 nbbuild/
-dist/
+
 nbdist/
 .nb-gradle/
 .mvn/
 mvnw
 mvnw.cmd
+/blue-bird-static/node_modules/
