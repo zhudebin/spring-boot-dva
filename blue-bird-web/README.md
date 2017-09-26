@@ -1,15 +1,4 @@
-# spring-boot-demo
-spring-boot-demo
-# blue-bird
-##结构说明
-## 前端视图使用vue
-blue-bird-static 前端视图
-
-
-
-
-
-
+# blue-bird 后台服务项目
 ## 后端服务使用spring-boot
 blue-bird-web 后端服务
 annotation -- 注解

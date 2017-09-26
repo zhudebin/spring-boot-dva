@@ -19,6 +19,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.blue.bird.commons.Constants.VERIFY_CODE;
+
 /**
  * Created by jim on 2017/9/21.
  */
@@ -27,7 +29,6 @@ import java.util.Map;
 @RequestMapping("/captchas")
 public class CaptchasController {
 
-    private static final String VRIFY_CODE = "vrifyCode";
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
@@ -38,7 +39,7 @@ public class CaptchasController {
              ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream()) {
             //生产验证码字符串并保存到session中
             String createText = defaultKaptcha.createText();
-            httpServletRequest.getSession().setAttribute(VRIFY_CODE, createText);
+            httpServletRequest.getSession().setAttribute(VERIFY_CODE, createText);
             //使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
             BufferedImage challenge = defaultKaptcha.createImage(createText);
             ImageIO.write(challenge, "jpg", jpegOutputStream);
@@ -61,7 +62,7 @@ public class CaptchasController {
     @RequestMapping("/code")
     @ResponseBody
     public Map captchas() {
-        Map<String,String> map = Maps.newHashMap();
+        Map<String, String> map = Maps.newHashMap();
         map.put("code", "/captchas/image");
         return map;
     }
@@ -70,8 +71,8 @@ public class CaptchasController {
     @ResponseBody
     public ModelAndView vrifyCaptchas(HttpServletRequest httpServletRequest) {
         ModelAndView andView = new ModelAndView();
-        String captchaId = (String) httpServletRequest.getSession().getAttribute(VRIFY_CODE);
-        String parameter = httpServletRequest.getParameter(VRIFY_CODE);
+        String captchaId = (String) httpServletRequest.getSession().getAttribute(VERIFY_CODE);
+        String parameter = httpServletRequest.getParameter(VERIFY_CODE);
 
         if (!captchaId.equals(parameter)) {
             andView.addObject("info", "错误的验证码");

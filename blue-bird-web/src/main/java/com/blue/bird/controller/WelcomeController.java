@@ -1,7 +1,6 @@
 package com.blue.bird.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Created by jim on 2017/9/19.
@@ -9,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WelcomeController {
 
-    @GetMapping("/")
-    public String welcome(){
-        return "redirect:/index.html";
-    }
+//    @GetMapping("/")
+//    public String welcome(){
+//        return "redirect:/index.html";
+//    }
 }
