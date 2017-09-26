@@ -2,15 +2,15 @@ const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 
 module.exports = {
-  name: 'AntD Admin',
-  prefix: 'antdAdmin',
-  footerText: 'Ant Design Admin  © 2017 zuiidea',
+  name: 'BLUE BIRD',
+  prefix: 'blueBird',
+  footerText: 'blueBird TECH © 2017 jim',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
   CORS: [],
   openPages: ['/login'],
-  apiPrefix: '/api/v1',
+  apiPrefix: APIV1,
   APIV1,
   APIV2,
   api: {

@@ -45,7 +45,6 @@ module.exports = (webpackConfig, env) => {
 
   // Alias
   webpackConfig.resolve.alias = {
-    '@':`${__dirname}/src`,
     components: `${__dirname}/src/components`,
     utils: `${__dirname}/src/utils`,
     config: `${__dirname}/src/utils/config`,

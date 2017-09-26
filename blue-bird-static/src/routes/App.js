@@ -10,17 +10,36 @@ import { withRouter } from 'dva/router'
 import '../themes/index.less'
 import './App.less'
 import Error from './error'
+import { Link } from 'react-router-dom'
 
+const { prefix, openPages } = config
 const { Header, Bread, Footer, Sider, styles } = Layout
 
-function App({children, dispatch, app, loading, location}) {
+const App = ({ children, dispatch, app, loading, location })=> {
+  const { isLogin } = app
+  let { pathname } = location
+
+  if (openPages && openPages.includes(pathname)) {
+    return (<div>
+      <Loader fullScreen spinning={loading.effects['app/query']} />
+      {children}
+    </div>)
+  }
   return (
-      <div className={styles.container}>
-        <div className={styles.content}>
-          {children}
-        </div>
+    <div>
+
+      <Link to='/home#'>
+        home
+      </Link>
+      <Link to='/error#'>
+        error
+      </Link>
+      <Loader fullScreen spinning={loading.effects['app/query']} />
+      <div className={styles.content}>
+        {isLogin ? children : <Error />}
       </div>
-  );
+    </div>
+  )
 }
 
 App.propTypes = {
@@ -29,6 +48,6 @@ App.propTypes = {
   dispatch: PropTypes.func,
   app: PropTypes.object,
   loading: PropTypes.object,
-};
+}
 
-export default connect(({app, loading}) => ({app, loading}))(App)
+export default withRouter(connect(({ app, loading }) => ({ app, loading }))(App))
