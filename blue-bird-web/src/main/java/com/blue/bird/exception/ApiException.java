@@ -14,6 +14,7 @@ public class ApiException extends RuntimeException{
     private ViewCodeEnum viewCodeEnum;
 
     public ApiException(ViewCodeEnum viewCodeEnum) {
+        super(viewCodeEnum.getCode().concat("-").concat(viewCodeEnum.getInfo()));
         this.viewCodeEnum = viewCodeEnum;
     }
 

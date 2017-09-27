@@ -1,7 +1,6 @@
 package com.blue.bird.controller;
 
-import com.blue.bird.annotation.LogAnnotation;
-import com.blue.bird.commons.StrUtils;
+import com.blue.bird.commons.StringUtil;
 import com.blue.bird.entity.view.UserDTO;
 import com.blue.bird.enums.ViewCodeEnum;
 import com.blue.bird.exception.ApiException;
@@ -24,17 +23,23 @@ import static com.blue.bird.enums.ViewCodeEnum.SUCCESS;
 public class LoginController {
 
     @GetMapping("/verify/login")
-    @LogAnnotation
     public ModelAndView login(UserDTO userDTO, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         String verifyCodeSession = (String) session.getAttribute(VERIFY_CODE);
         String verifyCode = userDTO.getVerifyCode();
 
-        if (!userDTO.verifyCode() || !StrUtils.equals(verifyCode, verifyCodeSession)) {
+        if (!userDTO.verifyCode() || !StringUtil.equals(verifyCode, verifyCodeSession)) {
             throw new ApiException(ViewCodeEnum.VERIFY_CODE_ERROR);
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(SUCCESS);
+        return modelAndView;
+    }
+
+    @GetMapping("/test")
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject(UserDTO.newUserDTO().setUsername("test1234").setPassword("pd5678"));
         return modelAndView;
     }
 

@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 /**
  * Created by jim on 2017/9/27.
  */
-@Data
+@Data(staticConstructor = "newUserDTO")
 @Accessors(chain = true)
 public class UserDTO {
 
@@ -26,7 +26,7 @@ public class UserDTO {
      */
     private String verifyCode;
 
-    public boolean verifyCode(){
+    public boolean verifyCode() {
         return StringUtils.hasText(verifyCode);
     }
 }

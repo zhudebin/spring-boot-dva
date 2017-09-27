@@ -30,3 +30,4 @@ nbdist/
 mvnw
 mvnw.cmd
 /blue-bird-static/node_modules/
+/logs/
