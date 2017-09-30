@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 /**
  * Created by jim on 2017/9/27.
  */
@@ -14,6 +17,8 @@ public class UserDTO {
     /**
      * 用户名
      */
+    @Max(50)
+    @Min(6)
     private String username;
 
     /**

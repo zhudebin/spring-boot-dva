@@ -1,5 +1,6 @@
 package com.blue.bird.service.impl;
 
+import com.blue.bird.entity.UserBO;
 import com.blue.bird.service.LoginService;
 import org.springframework.stereotype.Service;
 
@@ -9,4 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    @Override
+    public void login(UserBO userBO) {
+
+    }
 }

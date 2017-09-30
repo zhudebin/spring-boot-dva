@@ -1,6 +1,7 @@
 package com.blue.bird.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
@@ -35,23 +35,21 @@ public class CaptchasController {
     @RequestMapping("/image")
     public void creatCaptchas(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
 
-        try (ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
-             ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream()) {
-            //生产验证码字符串并保存到session中
-            String createText = defaultKaptcha.createText();
-            httpServletRequest.getSession().setAttribute(VERIFY_CODE, createText);
-            //使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
-            BufferedImage challenge = defaultKaptcha.createImage(createText);
-            ImageIO.write(challenge, "jpg", jpegOutputStream);
-            //定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组
-            byte[] captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
+        try (ServletOutputStream outputStream = httpServletResponse.getOutputStream()) {
             httpServletResponse.setHeader("Cache-Control", "no-store");
             httpServletResponse.setHeader("Pragma", "no-cache");
             httpServletResponse.setDateHeader("Expires", 0);
             httpServletResponse.setContentType("image/jpeg");
 
-            responseOutputStream.write(captchaChallengeAsJpeg);
-            responseOutputStream.flush();
+            //生产验证码字符串并保存到session中
+            String createText = defaultKaptcha.createText();
+            Config config = defaultKaptcha.getConfig();
+            httpServletRequest.getSession().setAttribute(config.getSessionKey(), createText);
+
+            BufferedImage challenge = defaultKaptcha.createImage(createText);
+            ImageIO.write(challenge, "jpg", outputStream);
+
+            outputStream.flush();
         } catch (Exception e) {
             log.error("创建验证码失败:", e);
             httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -67,11 +65,12 @@ public class CaptchasController {
         return map;
     }
 
-    @PostMapping("/vrify")
+    @PostMapping("/verify")
     @ResponseBody
-    public ModelAndView vrifyCaptchas(HttpServletRequest httpServletRequest) {
+    public ModelAndView verifyCaptchas(HttpServletRequest httpServletRequest) {
         ModelAndView andView = new ModelAndView();
-        String captchaId = (String) httpServletRequest.getSession().getAttribute(VERIFY_CODE);
+        Config config = defaultKaptcha.getConfig();
+        String captchaId = (String) httpServletRequest.getSession().getAttribute(config.getSessionKey());
         String parameter = httpServletRequest.getParameter(VERIFY_CODE);
 
         if (!captchaId.equals(parameter)) {

@@ -19,6 +19,7 @@ public enum ViewCodeEnum {
     SUCCESS("1001", "成功"),
     OPT_ERROR("2001", "操作异常"),
     VERIFY_CODE_ERROR("2002", "验证码错误"),
+    PARAMS_ERROR("2003","参数错误"),
     SYSTEM_ERROR("3001", "系统异常");
 
     private String code;
